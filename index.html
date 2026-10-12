@@ -75,7 +75,7 @@ body {
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .panel a:focus-visible, .panel button:focus-visible { outline-color: var(--panel-accent); }
-.wrap { max-width: 70rem; margin-inline: auto; padding-inline: clamp(16px, 5vw, 40px); }
+.wrap { max-width: 90rem; margin-inline: auto; padding-inline: clamp(16px, 4vw, 64px); }
 .label {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -126,20 +126,18 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 @media (max-width: 860px) { .links { display: none; } .nav .wrap { justify-content: space-between; } }
 @media (max-width: 420px) { .nav .btn { display: none; } }
 
-.hero { position: relative; padding-block: clamp(28px, 5vw, 64px) clamp(36px, 5vw, 64px); }
+.hero { position: relative; display: flex; align-items: center; min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); padding-block: clamp(20px, 3vw, 48px); }
 .glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(420px circle at var(--gx, 70%) var(--gy, 30%), color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%); }
-.hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
+.hero-grid { position: relative; width: 100%; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
 .eyebrow { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.06em; color: var(--accent); margin: 0 0 22px; }
 .eyebrow::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 10px; animation: beat 2s ease-in-out infinite; }
 @keyframes beat { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); } 50% { box-shadow: 0 0 0 7px transparent; } }
 h1 {
   font-family: var(--font-display); font-weight: 800; font-variation-settings: "wdth" 78;
-  font-size: clamp(3.1rem, 10.5vw, 7.5rem); line-height: 0.92; letter-spacing: -0.03em; margin: 0 0 30px;
+  font-size: clamp(3rem, min(9.5vw, 17vh), 9.5rem); line-height: 0.92; letter-spacing: -0.03em; margin: 0 0 26px;
 }
 h1 span { display: block; }
-h1 .l2 { color: transparent; -webkit-text-stroke: 1.5px var(--fg); transition: color 0.4s; }
-h1:hover .l2 { color: var(--accent); -webkit-text-stroke-color: var(--accent); }
-@supports not (-webkit-text-stroke: 1px #000) { h1 .l2 { color: var(--fg); } }
+h1 .l2 { color: var(--accent); }
 .lead { font-size: clamp(1.2rem, 2.3vw, 1.6rem); line-height: 1.4; max-width: 32ch; margin: 0 0 20px; text-wrap: pretty; }
 .now { font-family: var(--font-mono); font-size: 0.875rem; color: var(--muted); margin: 0 0 28px; min-height: 1.6em; }
 .now b { color: var(--accent); font-weight: 500; display: inline-block; }
@@ -158,7 +156,7 @@ h1:hover .l2 { color: var(--accent); -webkit-text-stroke-color: var(--accent); }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .chips-note { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); margin: 14px 0 0; }
 
-.net-wrap { position: relative; height: clamp(300px, 40vw, 470px); min-width: 0; }
+.net-wrap { position: relative; height: clamp(300px, min(44vw, 64vh), 680px); min-width: 0; }
 .net-wrap::before {
   content: ""; position: absolute; inset: 0;
   background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
@@ -176,7 +174,7 @@ h1:hover .l2 { color: var(--accent); -webkit-text-stroke-color: var(--accent); }
 .ticker:hover .ticker-track { animation-play-state: paused; }
 .ticker span { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 3vw, 2rem); letter-spacing: -0.01em; padding-inline: 22px; white-space: nowrap; display: inline-flex; align-items: center; gap: 44px; }
 .ticker span::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-.ticker span:nth-child(even) { color: transparent; -webkit-text-stroke: 1px var(--fg); }
+.ticker span:nth-child(even) { color: var(--muted); }
 @keyframes scroll { to { transform: translateX(-50%); } }
 
 .sec { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: 16px 40px; border-top: 1px solid var(--line); padding-block: clamp(36px, 6vw, 72px); }
