@@ -269,6 +269,14 @@ h1 .l2 { color: var(--accent); }
 .foot a { text-decoration: none; }
 .foot a:hover { color: var(--accent); }
 
+dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--fg); padding: clamp(20px, 4vw, 32px); width: min(92vw, 26rem); }
+dialog::backdrop { background: rgba(5, 10, 20, 0.6); }
+dialog h2 { font-family: var(--font-display); font-size: 1.8rem; line-height: 1.1; margin: 0 0 6px; }
+dialog p { margin: 0 0 16px; color: var(--muted); font-family: var(--font-mono); font-size: 0.85rem; overflow-wrap: anywhere; }
+dialog .mst { min-height: 1.4em; margin: 0 0 10px; }
+.mopts { display: grid; gap: 10px; margin-bottom: 14px; }
+.mopts .btn { text-align: center; }
+
 .up {
   position: fixed; right: 16px; bottom: 16px; z-index: 30; width: 48px; height: 48px; border-radius: 50%;
   border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
@@ -320,9 +328,9 @@ h1 .l2 { color: var(--accent); }
         <p class="lead">Trabajo en tecnología entendiendo qué necesita cada equipo de IT y buscando el perfil o la solución que mejor encaja.</p>
         <p class="now">Busco <b id="rot">un perfil de ciberseguridad</b></p>
         <div class="actions">
-          <a class="btn" href="mailto:Jaouad.elmousati@alvea.es?subject=Hola%20Jaouad">Enviarme un correo</a>
+          <button class="btn" type="button" data-mail>Enviarme un correo</button>
           <a class="btn ghost" href="https://www.linkedin.com/in/jaouad-el-mousati/" target="_blank" rel="noopener">Mi perfil en LinkedIn</a>
-          <a class="btn ghost" href="#newsletter">Mi newsletter</a>
+          <a class="btn ghost" href="https://www.linkedin.com/newsletters/inteligencia-operativa-en-it-7509677053529632768/" target="_blank" rel="noopener">Mi newsletter</a>
         </div>
         <div class="chips" id="chips" role="group" aria-label="Resaltar un área en la red"></div>
         <p class="chips-note">Pulsa un área para verla en la red.</p>
@@ -398,7 +406,7 @@ h1 .l2 { color: var(--accent); }
       <p>La dosis quincenal para líderes de IT. Elimina los silos de información y anticipa riesgos con inteligencia artificial.</p>
       <div class="issues" id="issues" aria-hidden="true"></div>
       <span class="cap">Una edición cada dos semanas</span>
-      <a class="btn" href="https://www.linkedin.com/in/jaouad-el-mousati/" target="_blank" rel="noopener">Verla en mi perfil de LinkedIn</a>
+      <a class="btn" href="https://www.linkedin.com/newsletters/inteligencia-operativa-en-it-7509677053529632768/" target="_blank" rel="noopener">Leerla en LinkedIn</a>
     </div>
   </section>
 
@@ -430,7 +438,7 @@ h1 .l2 { color: var(--accent); }
       <div class="mailcard">
         <p class="addr" id="addr">Jaouad.elmousati@alvea.es</p>
         <div class="actions">
-          <a class="btn" href="mailto:Jaouad.elmousati@alvea.es?subject=Hola%20Jaouad">Enviarme un correo</a>
+          <button class="btn" type="button" data-mail>Enviarme un correo</button>
           <button class="btn ghost" id="copy" type="button">Copiar dirección</button>
           <a class="btn ghost" href="https://www.linkedin.com/in/jaouad-el-mousati/" target="_blank" rel="noopener">LinkedIn</a>
           <a class="btn ghost" href="#top">Volver arriba</a>
@@ -445,6 +453,19 @@ h1 .l2 { color: var(--accent); }
     <a href="#top">Volver arriba</a>
   </footer>
 </div>
+
+<dialog id="maildlg" aria-labelledby="mdt">
+  <h2 id="mdt">Escríbeme</h2>
+  <p>Jaouad.elmousati@alvea.es</p>
+  <div class="mopts">
+    <a class="btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=Jaouad.elmousati@alvea.es&amp;su=Hola%20Jaouad" target="_blank" rel="noopener">Abrir en Gmail</a>
+    <a class="btn ghost" href="https://outlook.office.com/mail/deeplink/compose?to=Jaouad.elmousati@alvea.es&amp;subject=Hola%20Jaouad" target="_blank" rel="noopener">Abrir en Outlook</a>
+    <a class="btn ghost" href="mailto:Jaouad.elmousati@alvea.es?subject=Hola%20Jaouad">Usar mi programa de correo</a>
+    <button class="btn ghost" type="button" id="mcopy">Copiar dirección</button>
+  </div>
+  <p class="mst" id="mstat" role="status" aria-live="polite"></p>
+  <button class="btn ghost sm" type="button" id="mclose">Cerrar</button>
+</dialog>
 
 <button class="up" id="up" type="button" aria-label="Volver arriba">↑</button>
 
@@ -622,6 +643,19 @@ h1 .l2 { color: var(--accent); }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(t).then(function () { st.textContent = 'Dirección copiada.'; }).catch(pick);
     } else { pick(); }
+  });
+
+  var dlg = document.getElementById('maildlg');
+  [].forEach.call(document.querySelectorAll('[data-mail]'), function (b) {
+    b.addEventListener('click', function () { if (dlg.showModal) { dlg.showModal(); } else { dlg.setAttribute('open', ''); } });
+  });
+  document.getElementById('mclose').addEventListener('click', function () { if (dlg.close) { dlg.close(); } else { dlg.removeAttribute('open'); } });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg && dlg.close) dlg.close(); });
+  document.getElementById('mcopy').addEventListener('click', function () {
+    var tx = 'Jaouad.elmousati@alvea.es', s = document.getElementById('mstat');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(tx).then(function () { s.textContent = 'Dirección copiada.'; }).catch(function () { s.textContent = 'Cópiala a mano: ' + tx; });
+    } else { s.textContent = 'Cópiala a mano: ' + tx; }
   });
 
   var cv = document.getElementById('net');
